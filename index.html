@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>CheckOver</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <form id="data" onsubmit="return false">
+        <div class="articles">
+            <input id="q0" class="durable" type="radio" name="visible" value="0" hidden>
+            <article>
+
+                <div class="questions">
+                    <label for="q0">Übersicht</label>
+                    <button onclick="data.elements.visible.value--">zurück</button>
+                    <section>
+                        <label for="q1">1</label>
+
+                        <div class="question">
+                            <input id="q1" class="durable" type="radio" name="visible" value="1" hidden>
+                            <h3>question1</h3>
+                        </div>
+                    </section>
+                    <section>
+                        <label for="q2">2</label>
+
+                        <div class="question">
+                            <input id="q2" class="durable" type="radio" name="visible" value="2" hidden>
+                            <h3>question2</h3>
+                        </div>
+                    </section>
+                    <button onclick="data.elements.visible.value++">vor</button>
+                </div>
+                <header>
+                    <h2>article1</h2> <label for="q1">Öffnen</label>
+                    <span> von </span>
+                </header>
+            </article>
+            <article>
+                
+                <div class="questions">
+                    <label for="q0">Übersicht</label>
+                    <button onclick="data.elements.visible.value--">zurück</button>
+                    <section>
+                        <label for="q3">3</label>
+
+                        <div class="question">
+                            <input id="q3" class="durable" type="radio" name="visible" value="3" hidden>
+                            <input id="c3a" class="durable" type="checkbox">
+                            <h3>question3</h3>
+                        </div>
+                    </section>
+                    <section>
+                        <label for="q4">4</label>
+
+                        <div class="question">
+                            <input id="q4" class="durable" type="radio" name="visible" value="4" hidden>
+                            <input id="c4a" class="durable" type="checkbox">
+                            <h3>question4</h3>
+                        </div>
+                    </section>
+                    <section>
+                        <label for="q5">5</label>
+
+                        <div class="question">
+                            <input id="q5" class="durable" type="radio" name="visible" value="5" hidden>
+                            <input id="c5a" class="durable" type="checkbox">
+                            <h3>question5</h3>
+                        </div>
+                    </section>
+                    <button onclick="data.elements.visible.value++">vor</button>
+                </div>
+                <header>
+                    <h2>article2</h2>
+                    <label for="q3">Öffnen</label>
+                    <span> von </span>
+                </header>
+            </article>
+        </div>
+    </form>
+    <script src="checkover.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+article {
+    counter-reset: questions;
+
+    &>header {
+        border: 1px solid gray;
+        width: 120px;
+        height: 120px;
+
+        &>span::before {
+            content: counter(answered);
+        }
+
+        &>span::after {
+            content: counter(questions);
+        }
+    }
+}
+
+body {
+    height: 100%;
+    border: 5px solid red;
+    overflow: hidden;
+}
+
+div.articles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid blue;
+    height: 100%;
+    gap: 16px;
+}
+
+div.questions {
+    border: 2px solid green;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: end;
+    gap: 10px;
+    /* display: none; */
+    visibility: hidden;
+
+    counter-reset: answered;
+
+    &:has([name=visible]:checked) {
+        background-color: #ddd;
+        display: flex;
+        visibility: visible;
+    }
+}
+
+div.question {
+    border: 2px solid blue;
+    position: fixed;
+    inset: 0 0 100px 0;
+    /* display: none; */
+    visibility: hidden;
+
+    counter-increment: questions;
+
+    &:has([name=visible]:checked) {
+       /*  background-color: #ddd; */
+        display: block;
+        visibility: visible;
+    }
+
+    &:has([type=checkbox]:checked)>h3 {
+        counter-increment: answered;
+    }
+}
+
+form {
+    display: contents;
+}
+
+html {
+    height: 100%;
+}
+
+section {
+
+    &>label {
+        overflow: hidden;
+        border: 2px solid gray;
+        width: 20px;
+        height: 20px;
+    }
+
+    &:has([name=visible]:checked) > label {
+        background-color: yellow;
+    }
+}
