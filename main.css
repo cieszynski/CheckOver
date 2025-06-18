@@ -1,3 +1,54 @@
+@property --timer-minutes {
+    initial-value: 0;
+    inherits: true;
+    syntax: '<integer>';
+}
+
+@property --timer-seconds {
+    initial-value: 0;
+    inherits: true;
+    syntax: '<integer>';
+}
+
+@keyframes minutes {
+    to {
+        --timer-minutes: 60;
+    }
+}
+
+@keyframes seconds {
+    to {
+        --timer-seconds: 60;
+    }
+}
+
+@keyframes tick {
+    /* dummy */
+}
+
+body {
+    counter-set:
+        minutes var(--timer-minutes) seconds var(--timer-seconds);
+    animation-name: minutes, seconds, tick, rotation;
+    animation-duration: 3600s, 60s, 1s, 60s;
+    animation-timing-function: steps(60), steps(60);
+    animation-play-state: paused;
+    animation-direction: reverse, reverse;
+    animation-iteration-count: 1, 60, 3600;
+
+    &:has(input.quest:checked) {
+        animation-play-state: running;
+    }
+}
+
+time::before {
+    content: counter(minutes, decimal-leading-zero);
+}
+
+time::after {
+    content: counter(seconds, decimal-leading-zero);
+}
+
 *,
 *::after,
 *::before {
@@ -29,6 +80,18 @@ body {
     overflow: hidden;
 }
 
+div.intro {
+    border: 1px solid blue;
+    height: 100%;
+    visibility: hidden;
+    position: fixed;
+    inset: 0;
+
+    &:has([name=visible]:checked) {
+        visibility: visible;
+    }
+}
+
 div.articles {
     display: flex;
     justify-content: center;
@@ -36,8 +99,17 @@ div.articles {
     border: 1px solid blue;
     height: 100%;
     gap: 16px;
+
+    visibility: hidden;
+    position: fixed;
+    inset: 0;
+
+    &:has([name=visible]:checked) {
+        visibility: visible;
+    }
 }
 
+div.intropages,
 div.questions {
     border: 2px solid green;
     position: fixed;
@@ -57,6 +129,7 @@ div.questions {
     }
 }
 
+div.intropage,
 div.question {
     border: 2px solid blue;
     position: fixed;
@@ -67,7 +140,7 @@ div.question {
     counter-increment: questions;
 
     &:has([name=visible]:checked) {
-       /*  background-color: #ddd; */
+        /*  background-color: #ddd; */
         display: block;
         visibility: visible;
     }
@@ -85,6 +158,16 @@ html {
     height: 100%;
 }
 
+
+
+menu {
+    padding: 0;
+    list-style: none;
+    position: fixed;
+    border: 3px solid green;
+    margin: auto;
+}
+
 section {
 
     &>label {
@@ -94,7 +177,7 @@ section {
         height: 20px;
     }
 
-    &:has([name=visible]:checked) > label {
+    &:has([name=visible]:checked)>label {
         background-color: yellow;
     }
 }
