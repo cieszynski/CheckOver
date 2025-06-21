@@ -15,6 +15,7 @@
 
 <body>
     <form id="data" onsubmit="return false">
+        <input id="finished" class="durable finished" type="checkbox" >
         <div class="intro">
 
             <header>
@@ -49,6 +50,9 @@
 
                 <div class="questions">
                     <label for="q0">Übersicht</label>
+                    <button onclick="playAnimation()">play</button>
+                    <button onclick="pauseAnimation()">pause</button>
+                    <button onclick="finishAnimation()">finishAnimation</button>
                     <button onclick="data.elements.visible.value--">zurück</button>
                     <section>
                         <label for="q1">1</label>
@@ -115,8 +119,32 @@
             </article>
         </div>
 
+        <div class="pause">
+            <input id="p0" class="durable pause" type="checkbox" name="visible" hidden>
+            <h2>Pause</h2>
+        </div>
+
+        <div class="prefinish">
+            <input id="prefinish" class="durable pause" type="checkbox" name="visible" hidden>
+            <h2>Wirklich beenden?</h2>
+            <button onclick="finished.click()">Beenden</button>
+            <label for="finished">Beenden</label>
+        </div>
+
+        <div class="results">
+            <input id="results" class="durable finished" type="radio" name="visible" hidden>
+            <h2>Ergebnisse</h2>
+                        <label for="q0">Ansehen</label>
+        </div>
+
         <menu>
             <li><time>:</time></li>
+            <li>
+                <button class="pause" onclick="p0.click()"><!-- Pause --></button>
+            </li>
+            <li>
+                <button class="finish" onclick="prefinish.click()">Fertig</button>
+            </li>
         </menu>
     </form>
     <script src="checkover.js"></script>

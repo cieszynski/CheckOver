@@ -55,11 +55,35 @@ data.oninput = (event) => {
             );
     }
 };
+
+const pauseAnimation = () => {
+
+    document.body.getAnimations().forEach((animation) => {
+        animation.pause();
+    });
+}
+
+const playAnimation = () => {
+
+    document.body.getAnimations().forEach((animation) => {
+        animation.play();
+    });
+}
+
+const finishAnimation = () => {
+
+    document.body.getAnimations().forEach((animation) => {
+        animation.finish();
+    });
+}
+
 document.body.onanimationiteration = (event) => {
     localStorage.setItem("currentTime", event.elapsedTime * 1000);
 };
 
 document.body.onanimationend = (event) => {
+    prefinish.checked = false;
+    results.checked = true;
     //alert(8)
 };
 
@@ -73,9 +97,10 @@ document.addEventListener("keydown", (event) => {
                     animation.finish();
                 });
                 localStorage.clear();
+                data.reset();
                 break;
             default:
-                console.log(event);
+                /* console.log(event); */
         }
     } else if (event.ctrlKey) {
         switch (event.key) {
@@ -84,10 +109,12 @@ document.addEventListener("keydown", (event) => {
                 event.preventDefault();
                 break;
             default:
-                console.log(event);
+                /* console.log(event); */
         }
-    } else {switch (event.key) {
+    } else {
+        switch (event.key) {
             default:
-                console.log(event);
-        }}
+                /* console.log(event); */
+        }
+    }
 });

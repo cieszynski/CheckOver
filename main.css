@@ -1,13 +1,19 @@
 @property --timer-minutes {
     initial-value: 0;
     inherits: true;
-    syntax: '<integer>';
+    syntax: "<integer>";
 }
 
 @property --timer-seconds {
     initial-value: 0;
     inherits: true;
-    syntax: '<integer>';
+    syntax: "<integer>";
+}
+
+@property --timer-rotation {
+    initial-value: 110deg;
+    inherits: true;
+    syntax: "<angle>";
 }
 
 @keyframes minutes {
@@ -22,25 +28,61 @@
     }
 }
 
+@keyframes rotation {
+    to {
+        --timer-rotation: 360deg;
+    }
+}
+
 @keyframes tick {
     /* dummy */
 }
 
 body {
-    counter-set:
-        minutes var(--timer-minutes) seconds var(--timer-seconds);
+    counter-set: minutes var(--timer-minutes) seconds var(--timer-seconds);
     animation-name: minutes, seconds, tick, rotation;
-    animation-duration: 3600s, 60s, 1s, 60s;
-    animation-timing-function: steps(60), steps(60);
+    animation-duration: 3600s, 60s, 1s, 3600s;
+    animation-timing-function:
+        steps(60),
+        steps(60),
+        steps(1),
+        steps(360);
+    animation-direction: reverse, reverse, reverse, reverse;
+    animation-iteration-count: 1, 60, 3600, 1;
     animation-play-state: paused;
-    animation-direction: reverse, reverse;
-    animation-iteration-count: 1, 60, 3600;
+
+    & > form > menu {
+        visibility: hidden;
+    }
 
     &:has(input.quest:checked) {
         animation-play-state: running;
+
+        & > form > menu {
+            visibility: visible;
+
+            & button.pause::before {
+                content: "Pause";
+            }
+        }
+    }
+
+    &:has(input.pause:checked) {
+        animation-play-state: paused;
+
+        & > form > menu button.pause::before {
+            content: "Weiter";
+        }
+    }
+
+    &:has(input.finished:checked) {
+        animation-play-state: paused;
     }
 }
 
+time {
+    font: bold 14px sans-serif;
+}
 time::before {
     content: counter(minutes, decimal-leading-zero);
 }
@@ -59,16 +101,16 @@ time::after {
 article {
     counter-reset: questions;
 
-    &>header {
+    & > header {
         border: 1px solid gray;
         width: 120px;
         height: 120px;
 
-        &>span::before {
+        & > span::before {
             content: counter(answered);
         }
 
-        &>span::after {
+        & > span::after {
             content: counter(questions);
         }
     }
@@ -80,6 +122,19 @@ body {
     overflow: hidden;
 }
 
+button {
+    &.pause, &.finish {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        border: 3px solid green;
+        padding: 0;
+    }
+}
+
+div.results,
+div.prefinish,
+div.pause,
 div.intro {
     border: 1px solid blue;
     height: 100%;
@@ -87,9 +142,15 @@ div.intro {
     position: fixed;
     inset: 0;
 
-    &:has([name=visible]:checked) {
+    &:has([name="visible"]:checked) {
         visibility: visible;
     }
+}
+
+div.results,
+div.prefinish,
+div.pause {
+    background-color: #fff;
 }
 
 div.articles {
@@ -104,7 +165,7 @@ div.articles {
     position: fixed;
     inset: 0;
 
-    &:has([name=visible]:checked) {
+    &:has([name="visible"]:checked) {
         visibility: visible;
     }
 }
@@ -122,7 +183,7 @@ div.questions {
 
     counter-reset: answered;
 
-    &:has([name=visible]:checked) {
+    &:has([name="visible"]:checked) {
         background-color: #ddd;
         display: flex;
         visibility: visible;
@@ -139,13 +200,13 @@ div.question {
 
     counter-increment: questions;
 
-    &:has([name=visible]:checked) {
+    &:has([name="visible"]:checked) {
         /*  background-color: #ddd; */
         display: block;
         visibility: visible;
     }
 
-    &:has([type=checkbox]:checked)>h3 {
+    &:has([type="checkbox"]:checked) > h3 {
         counter-increment: answered;
     }
 }
@@ -158,26 +219,49 @@ html {
     height: 100%;
 }
 
-
-
 menu {
-    padding: 0;
+    padding: 8px;
     list-style: none;
     position: fixed;
     border: 3px solid green;
     margin: auto;
+    top: 10px;
+    width: 200px;
+    left: calc(50% - 100px);
+    height: 68px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 section {
-
-    &>label {
+    & > label {
         overflow: hidden;
         border: 2px solid gray;
         width: 20px;
         height: 20px;
     }
 
-    &:has([name=visible]:checked)>label {
+    &:has([name="visible"]:checked) > label {
         background-color: yellow;
     }
+}
+
+li:has(time) {
+    display: flex;
+    place-content: center;
+    place-items: center;
+    aspect-ratio: 1;
+    width: 48px;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    background:
+        radial-gradient(#fff) padding-box,
+        conic-gradient(
+        green 0,
+        green var(--timer-rotation),
+        #a7a7a7 var(--timer-rotation)
+    ) border-box;
+    animation: timer 120s linear forwards;
 }
