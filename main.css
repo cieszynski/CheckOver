@@ -51,32 +51,16 @@ body {
     animation-iteration-count: 1, 60, 3600, 1;
     animation-play-state: paused;
 
-    & > form > menu {
+    & menu {
         visibility: hidden;
     }
 
-    &:has(input.quest:checked) {
+    &:not(:has(dialog:modal, input.finished:checked)):has(input.quest:checked) {
         animation-play-state: running;
 
-        & > form > menu {
+        & menu {
             visibility: visible;
-
-            & button.pause::before {
-                content: "Pause";
-            }
         }
-    }
-
-    &:has(input.pause:checked) {
-        animation-play-state: paused;
-
-        & > form > menu button.pause::before {
-            content: "Weiter";
-        }
-    }
-
-    &:has(input.finished:checked) {
-        animation-play-state: paused;
     }
 }
 
@@ -132,7 +116,41 @@ button {
     }
 }
 
-div.results,
+button.navigation {
+    border-radius: 8px;
+    border: 3px solid green;
+    &.next:is(
+        article:last-of-type:has(section:last-of-type input.quest:checked)
+            button.next
+    ),
+    &.prev:is(
+        article:first-of-type:has(section:first-of-type input.quest:checked)
+            button.prev
+    ) {
+        visibility: hidden;
+    }
+}
+
+dialog {
+    width: 100vw;
+    height: 100vh;
+    max-width: unset;
+    max-height: unset;
+    position: relative;
+}
+
+div.page {
+    height: 100%;
+    border: 2px solid pink;
+    position: absolute;
+    visibility: hidden;
+    inset: 0;
+
+    &:has(input.page:checked) {
+        visibility: visible;
+    }
+}
+
 div.prefinish,
 div.pause,
 div.intro {

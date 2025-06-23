@@ -14,8 +14,7 @@
 </head>
 
 <body>
-    <form id="data" onsubmit="return false">
-        <input id="finished" class="durable finished" type="checkbox" >
+    <form id="data" onsubmit="return false" onreset="localStorage.clear()">
         <div class="intro">
 
             <header>
@@ -28,7 +27,7 @@
                     <label for="i1">1</label>
 
                     <div class="intropage">
-                        <input id="i1" class="durable" type="radio" name="visible" value="1" checked hidden>
+                        <input id="i1" class="durable intro" type="radio" name="visible" value="1" checked hidden>
                         <h3>intropage1</h3>
                     </div>
                 </section>
@@ -37,23 +36,22 @@
                     <label for="i2">2</label>
 
                     <div class="intropage">
-                        <input id="i2" class="durable" type="radio" name="visible" value="2" hidden>
+                        <input id="i2" class="durable intro" type="radio" name="visible" value="2" hidden>
                         <h3>intropage2</h3>
-                        <label for="q0">START</label>
+                        <label for="overview">START</label>
                     </div>
                 </section>
             </div>
         </div>
         <div class="articles">
-            <input id="q0" class="durable quest" type="radio" name="visible" value="3" hidden>
+            <input id="overview" class="durable quest" type="radio" name="visible" value="3" hidden>
             <article>
 
                 <div class="questions">
-                    <label for="q0">Übersicht</label>
-                    <button onclick="playAnimation()">play</button>
-                    <button onclick="pauseAnimation()">pause</button>
-                    <button onclick="finishAnimation()">finishAnimation</button>
-                    <button onclick="data.elements.visible.value--">zurück</button>
+                    <button onclick="overview.click()">Übersicht</button>
+                    <button onclick="navigatePrev()" class="navigation prev">zurück</button>
+
+                    <!-- FRAGE 1 -->
                     <section>
                         <label for="q1">1</label>
 
@@ -62,6 +60,8 @@
                             <h3>question1</h3>
                         </div>
                     </section>
+
+                    <!-- FRAGE 2 -->
                     <section>
                         <label for="q2">2</label>
 
@@ -70,7 +70,7 @@
                             <h3>question2</h3>
                         </div>
                     </section>
-                    <button onclick="data.elements.visible.value++">vor</button>
+                    <button onclick="navigateNext()" class="navigation next">vor</button>
                 </div>
                 <header>
                     <h2>article1</h2> <label for="q1">Öffnen</label>
@@ -80,8 +80,8 @@
             <article>
 
                 <div class="questions">
-                    <label for="q0">Übersicht</label>
-                    <button onclick="data.elements.visible.value--">zurück</button>
+                    <button onclick="overview.click()">Übersicht</button>
+                    <button onclick="navigatePrev()" class="navigation prev">zurück</button>
                     <section>
                         <label for="q3">3</label>
 
@@ -109,7 +109,7 @@
                             <h3>question5</h3>
                         </div>
                     </section>
-                    <button onclick="data.elements.visible.value++">vor</button>
+                    <button onclick="navigateNext()" class="navigation next">vor</button>
                 </div>
                 <header>
                     <h2>article2</h2>
@@ -119,33 +119,31 @@
             </article>
         </div>
 
-        <div class="pause">
-            <input id="p0" class="durable pause" type="checkbox" name="visible" hidden>
-            <h2>Pause</h2>
-        </div>
-
-        <div class="prefinish">
-            <input id="prefinish" class="durable pause" type="checkbox" name="visible" hidden>
-            <h2>Wirklich beenden?</h2>
-            <button onclick="finished.click()">Beenden</button>
-            <label for="finished">Beenden</label>
-        </div>
-
-        <div class="results">
-            <input id="results" class="durable finished" type="radio" name="visible" hidden>
-            <h2>Ergebnisse</h2>
-                        <label for="q0">Ansehen</label>
-        </div>
-
         <menu>
             <li><time>:</time></li>
             <li>
-                <button class="pause" onclick="p0.click()"><!-- Pause --></button>
+                <button class="pause" onclick="dlgpause.showModal()">Pause</button>
             </li>
             <li>
-                <button class="finish" onclick="prefinish.click()">Fertig</button>
+                <button class="finish" onclick="dlgfinish.showModal()">Fertig</button>
             </li>
         </menu>
+
+        <dialog id="dlgpause">pause <time>:</time></dialog>
+        <dialog id="dlgfinish">
+            <div class="page">
+                <input id="prefinish" type="radio" class="page durable" name="finishing" value="1" hidden checked>
+                Wirklich?
+                <div>
+                    <button onclick="dlgfinish.close()">Zurück</button>
+                    <button onclick="finished.click()">Ergebnisse</button>
+                </div>
+            </div>
+            <div class="page">
+                <input id="finished" type="radio" class="finished page durable" name="finishing" value="2" hidden>
+                Ergebnisse
+            </div>
+        </dialog>
     </form>
     <script src="checkover.js"></script>
 </body>

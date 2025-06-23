@@ -11,9 +11,13 @@ onload = (event) => {
                                 "true",
                             );
                         } else {
-                            elem.removeAttribute(
-                                "checked",
-                            );
+                            // ensure that hardcoded 'checked'
+                            // get not removed
+                            if (!elem.hasAttribute('checked')) {
+                                elem.removeAttribute(
+                                    "checked",
+                                );
+                            }
                         }
                         break;
 
@@ -56,51 +60,67 @@ data.oninput = (event) => {
     }
 };
 
-const pauseAnimation = () => {
-
-    document.body.getAnimations().forEach((animation) => {
-        animation.pause();
-    });
-}
-
-const playAnimation = () => {
-
-    document.body.getAnimations().forEach((animation) => {
-        animation.play();
-    });
-}
-
-const finishAnimation = () => {
-
-    document.body.getAnimations().forEach((animation) => {
-        animation.finish();
-    });
-}
-
 document.body.onanimationiteration = (event) => {
     localStorage.setItem("currentTime", event.elapsedTime * 1000);
 };
 
 document.body.onanimationend = (event) => {
-    prefinish.checked = false;
-    results.checked = true;
-    //alert(8)
+    finished.click();
 };
+
+// NAVIGATION
+const navigateNext = () => {
+
+    if (current = document.querySelector('input.quest:checked')) {
+
+        let seen = false;
+
+        data.elements.visible.forEach(item => {
+            if (seen) {
+                seen = false;
+                item.click();
+            }
+
+            seen = (current === item);
+        });
+    }
+}
+
+const navigatePrev = () => {
+
+    if (current = document.querySelector('input[name=visible]:checked')) {
+
+        let latest = null;
+
+        data.elements.visible.forEach(item => {
+
+            if (item === current && latest !== null) {
+                latest.click();
+                latest = null;
+            } else {
+                latest = item;
+            }
+        });
+    }
+}
 
 document.addEventListener("keydown", (event) => {
     if (event.ctrlKey && event.shiftKey) {
         switch (event.key) {
-            case "F5":
+            case "F5": // RESET
                 event.preventDefault();
 
                 document.body.getAnimations().forEach((animation) => {
-                    animation.finish();
+                    // animation.finish() set input.finished -> checked
+                    // so reset don't working trustworthy
+                    animation.pause();
                 });
-                localStorage.clear();
+
                 data.reset();
+                
                 break;
             default:
-                /* console.log(event); */
+            /* console.log(event); */
         }
     } else if (event.ctrlKey) {
         switch (event.key) {
@@ -109,12 +129,12 @@ document.addEventListener("keydown", (event) => {
                 event.preventDefault();
                 break;
             default:
-                /* console.log(event); */
+            /* console.log(event); */
         }
     } else {
         switch (event.key) {
             default:
-                /* console.log(event); */
+            /* console.log(event); */
         }
     }
 });
