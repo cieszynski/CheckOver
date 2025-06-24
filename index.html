@@ -15,58 +15,61 @@
 
 <body>
     <form id="data" onsubmit="return false" onreset="localStorage.clear()">
-        <div class="intro">
+        <div class="page-visibility-checked">
 
             <header>
                 <h2>Intro</h2>
             </header>
 
-            <div class="intropages">
+            <div class="page-listview page-visibility-checked">
 
                 <section>
                     <label for="i1">1</label>
 
-                    <div class="intropage">
-                        <input id="i1" class="durable intro" type="radio" name="visible" value="1" checked hidden>
+                    <div class="page-listitem page-visibility-checked">
+                        <input id="i1" class="durable page-visibility" type="radio" name="visible" value="1" checked hidden>
                         <h3>intropage1</h3>
+                        <p>
+                            Für die Bearbeitung der Aufgaben haben Sie <strong><span class="minutes"></span> Minuten</strong> Zeit.
+                        </p>
                     </div>
                 </section>
 
                 <section>
                     <label for="i2">2</label>
 
-                    <div class="intropage">
-                        <input id="i2" class="durable intro" type="radio" name="visible" value="2" hidden>
+                    <div class="page-listitem page-visibility-checked">
+                        <input id="i2" class="durable page-visibility" type="radio" name="visible" value="2" hidden>
                         <h3>intropage2</h3>
                         <label for="overview">START</label>
                     </div>
                 </section>
             </div>
         </div>
-        <div class="articles">
-            <input id="overview" class="durable quest" type="radio" name="visible" value="3" hidden>
+        <div class="page-gridview page-visibility-checked">
+            <input id="overview" class="durable quest page-visibility" type="radio" name="visible" value="3" hidden>
             <article>
 
-                <div class="questions">
-                    <button onclick="overview.click()">Übersicht</button>
+                <div class="reset-questions page-listview page-visibility-checked reset-answered">
+                    <button class="navigation overview" onclick="overview.click()">Übersicht</button>
                     <button onclick="navigatePrev()" class="navigation prev">zurück</button>
 
                     <!-- FRAGE 1 -->
                     <section>
-                        <label for="q1">1</label>
+                         <button class="navigation page" onclick="q1.click()">X</button>
 
-                        <div class="question">
-                            <input id="q1" class="durable quest" type="radio" name="visible" value="4" hidden>
+                        <div class="increment-questions page-listitem page-visibility-checked">
+                            <input id="q1" class="durable quest page-visibility" type="radio" name="visible" value="4" hidden>
                             <h3>question1</h3>
                         </div>
                     </section>
 
                     <!-- FRAGE 2 -->
                     <section>
-                        <label for="q2">2</label>
+                         <button class="navigation page" onclick="q1.click()">X</button>
 
-                        <div class="question">
-                            <input id="q2" class="durable quest" type="radio" name="visible" value="5" hidden>
+                        <div class="increment-questions page-listitem page-visibility-checked">
+                            <input id="q2" class="durable quest page-visibility" type="radio" name="visible" value="5" hidden>
                             <h3>question2</h3>
                         </div>
                     </section>
@@ -79,33 +82,33 @@
             </article>
             <article>
 
-                <div class="questions">
-                    <button onclick="overview.click()">Übersicht</button>
+                <div class="reset-questions page-listview page-visibility-checked reset-answered">
+                    <button class="navigation overview" onclick="overview.click()">Übersicht</button>
                     <button onclick="navigatePrev()" class="navigation prev">zurück</button>
                     <section>
-                        <label for="q3">3</label>
+                         <button class="navigation page" onclick="q1.click()">X</button>
 
-                        <div class="question">
-                            <input id="q3" class="durable quest" type="radio" name="visible" value="3" hidden>
-                            <input id="c3a" class="durable" type="checkbox">
+                        <div class="increment-questions page-listitem page-visibility-checked">
+                            <input id="q3" class="durable quest page-visibility" type="radio" name="visible" value="3" hidden>
+                            <input id="c3a" class="durable answere" type="checkbox">
                             <h3>question3</h3>
                         </div>
                     </section>
                     <section>
-                        <label for="q4">4</label>
+                         <button class="navigation page" onclick="q1.click()">X</button>
 
-                        <div class="question">
-                            <input id="q4" class="durable quest" type="radio" name="visible" value="4" hidden>
-                            <input id="c4a" class="durable" type="checkbox">
+                        <div class="increment-questions page-listitem page-visibility-checked">
+                            <input id="q4" class="durable quest page-visibility" type="radio" name="visible" value="4" hidden>
+                            <input id="c4a" class="durable answere" type="checkbox">
                             <h3>question4</h3>
                         </div>
                     </section>
                     <section>
-                        <label for="q5">5</label>
+                         <button class="navigation page" onclick="q1.click()">X</button>
 
-                        <div class="question">
-                            <input id="q5" class="durable quest" type="radio" name="visible" value="5" hidden>
-                            <input id="c5a" class="durable" type="checkbox">
+                        <div class="increment-questions page-listitem page-visibility-checked">
+                            <input id="q5" class="durable quest page-visibility" type="radio" name="visible" value="5" hidden>
+                            <input id="c5a" class="durable dropable" placeholder="nix" type="text">
                             <h3>question5</h3>
                         </div>
                     </section>
@@ -131,16 +134,16 @@
 
         <dialog id="dlgpause">pause <time>:</time></dialog>
         <dialog id="dlgfinish">
-            <div class="page">
-                <input id="prefinish" type="radio" class="page durable" name="finishing" value="1" hidden checked>
-                Wirklich?
+            <div class="page-visibility-checked">
+                <input id="prefinish" type="radio" class="durable page-visibility" name="finishing" value="1" hidden checked>
+                Wirklich? <time>:</time>
                 <div>
                     <button onclick="dlgfinish.close()">Zurück</button>
                     <button onclick="finished.click()">Ergebnisse</button>
                 </div>
             </div>
-            <div class="page">
-                <input id="finished" type="radio" class="finished page durable" name="finishing" value="2" hidden>
+            <div class="page-visibility-checked">
+                <input id="finished" type="radio" class="finished durable page-visibility" name="finishing" value="2" hidden>
                 Ergebnisse
             </div>
         </dialog>

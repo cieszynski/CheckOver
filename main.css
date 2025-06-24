@@ -38,8 +38,21 @@
     /* dummy */
 }
 
+*,
+*::after,
+*::before {
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
-    counter-set: minutes var(--timer-minutes) seconds var(--timer-seconds);
+    height: 100%;
+    border: 5px solid red;
+    overflow: hidden;
+
+    /* question: count all questions */
+    counter-set: minutes var(--timer-minutes) seconds var(--timer-seconds)
+        question 1;
     animation-name: minutes, seconds, tick, rotation;
     animation-duration: 3600s, 60s, 1s, 3600s;
     animation-timing-function:
@@ -64,24 +77,6 @@ body {
     }
 }
 
-time {
-    font: bold 14px sans-serif;
-}
-time::before {
-    content: counter(minutes, decimal-leading-zero);
-}
-
-time::after {
-    content: counter(seconds, decimal-leading-zero);
-}
-
-*,
-*::after,
-*::before {
-    margin: 0;
-    box-sizing: border-box;
-}
-
 article {
     counter-reset: questions;
 
@@ -100,12 +95,6 @@ article {
     }
 }
 
-body {
-    height: 100%;
-    border: 5px solid red;
-    overflow: hidden;
-}
-
 button {
     &.pause, &.finish {
         width: 48px;
@@ -117,8 +106,39 @@ button {
 }
 
 button.navigation {
-    border-radius: 8px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 24px;
     border: 3px solid green;
+    font-size: 0.1px;
+
+    &.page {
+        background-color: IndianRed;
+        &::before {
+            font: bold 14px sans-serif;
+            content: counter(question);
+        }
+
+        /* mark edited pages */
+        &:is(
+            section:has(.answere:checked, .dropable:not(:placeholder-shown))
+                button.page
+        ) {
+            background-color: lightgreen;
+        }
+
+        /* mark current active page */
+        &:is(section:has(.page-visibility:checked) button.page) {
+            background-color: white;
+            border-radius: 8px;
+
+            &::before {
+                font: bold 18px sans-serif;
+            }
+        }
+    }
+
+    /* back/forward buttons, hidden at first/last question */
     &.next:is(
         article:last-of-type:has(section:last-of-type input.quest:checked)
             button.next
@@ -128,6 +148,10 @@ button.navigation {
             button.prev
     ) {
         visibility: hidden;
+    }
+
+    &.overview {
+        margin-right: 48px;
     }
 }
 
@@ -139,94 +163,49 @@ dialog {
     position: relative;
 }
 
-div.page {
-    height: 100%;
-    border: 2px solid pink;
-    position: absolute;
-    visibility: hidden;
-    inset: 0;
-
-    &:has(input.page:checked) {
-        visibility: visible;
-    }
-}
-
-div.prefinish,
-div.pause,
-div.intro {
-    border: 1px solid blue;
-    height: 100%;
-    visibility: hidden;
+div.page-visibility-checked {
     position: fixed;
+    visibility: hidden;
     inset: 0;
 
-    &:has([name="visible"]:checked) {
+    &:has(input.page-visibility:checked) {
         visibility: visible;
     }
 }
 
-div.results,
-div.prefinish,
-div.pause {
-    background-color: #fff;
-}
-
-div.articles {
+div.page-gridview {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid blue;
-    height: 100%;
     gap: 16px;
-
-    visibility: hidden;
-    position: fixed;
-    inset: 0;
-
-    &:has([name="visible"]:checked) {
-        visibility: visible;
-    }
 }
 
-div.intropages,
-div.questions {
-    border: 2px solid green;
-    position: fixed;
-    inset: 0;
+div.page-listview {
+    background-color: blue;
+    display: flex;
     justify-content: center;
     align-items: end;
-    gap: 10px;
-    /* display: none; */
-    visibility: hidden;
-
-    counter-reset: answered;
-
-    &:has([name="visible"]:checked) {
-        background-color: #ddd;
-        display: flex;
-        visibility: visible;
-    }
+    gap: 8px;
+    padding: 0 0 16px 0;
 }
 
-div.intropage,
-div.question {
-    border: 2px solid blue;
-    position: fixed;
-    inset: 0 0 100px 0;
-    /* display: none; */
-    visibility: hidden;
+div.page-listitem {
+    background-color: lightblue;
+    inset: 0 0 84px 0;
+}
 
-    counter-increment: questions;
+div.reset-questions {
+    counter-reset: questions;
+}
 
-    &:has([name="visible"]:checked) {
-        /*  background-color: #ddd; */
-        display: block;
-        visibility: visible;
-    }
+div.increment-questions {
+    /*  question: count all questions 
+        question: count questions in chapter/article */
+    counter-increment: questions question;
+}
 
-    &:has([type="checkbox"]:checked) > h3 {
-        counter-increment: answered;
-    }
+div.reset-answered {
+    counter-reset: answered;
 }
 
 form {
@@ -251,35 +230,44 @@ menu {
     display: flex;
     align-items: center;
     gap: 16px;
+
+    & li:has(time) {
+        display: flex;
+        place-content: center;
+        place-items: center;
+        aspect-ratio: 1;
+        width: 48px;
+        border-radius: 50%;
+        border: 4px solid transparent;
+        background:
+            radial-gradient(#fff) padding-box,
+            conic-gradient(
+            green 0,
+            green var(--timer-rotation),
+            #a7a7a7 var(--timer-rotation)
+        ) border-box;
+        animation: timer 120s linear forwards;
+    }
 }
 
 section {
-    & > label {
-        overflow: hidden;
-        border: 2px solid gray;
-        width: 20px;
-        height: 20px;
-    }
 
-    &:has([name="visible"]:checked) > label {
-        background-color: yellow;
+    /* count edited pages in chapter/article */
+    &:has(.answere:checked, .dropable:not(:placeholder-shown)) {
+        counter-increment: answered;
     }
 }
 
-li:has(time) {
-    display: flex;
-    place-content: center;
-    place-items: center;
-    aspect-ratio: 1;
-    width: 48px;
-    border-radius: 50%;
-    border: 4px solid transparent;
-    background:
-        radial-gradient(#fff) padding-box,
-        conic-gradient(
-        green 0,
-        green var(--timer-rotation),
-        #a7a7a7 var(--timer-rotation)
-    ) border-box;
-    animation: timer 120s linear forwards;
+time {
+    font: bold 14px sans-serif;
+}
+
+.minutes::before,
+time::before {
+    content: counter(minutes, decimal-leading-zero);
+}
+
+.seconds::after,
+time::after {
+    content: counter(seconds, decimal-leading-zero);
 }
