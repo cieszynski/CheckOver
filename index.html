@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="main.css">
 
     <style>
-
+        :root {
+            --timing-seconds: 120;
+        }
     </style>
 </head>
 
@@ -27,10 +29,12 @@
                     <label for="i1">1</label>
 
                     <div class="page-listitem page-visibility-checked">
-                        <input id="i1" class="durable page-visibility" type="radio" name="visible" value="1" checked hidden>
+                        <input id="i1" class="durable page-visibility" type="radio" name="visible" value="1" checked
+                            hidden>
                         <h3>intropage1</h3>
                         <p>
-                            Für die Bearbeitung der Aufgaben haben Sie <strong><span class="minutes"></span> Minuten</strong> Zeit.
+                            Für die Bearbeitung der Aufgaben haben Sie <strong><span class="minutes"></span>
+                                Minuten</strong> Zeit.
                         </p>
                     </div>
                 </section>
@@ -50,28 +54,66 @@
             <input id="overview" class="durable quest page-visibility" type="radio" name="visible" value="3" hidden>
             <article>
 
-                <div class="reset-questions page-listview page-visibility-checked reset-answered">
+                <div class="reset-questions page-listview page-visibility-checked reset-answerd">
                     <button class="navigation overview" onclick="overview.click()">Übersicht</button>
                     <button onclick="navigatePrev()" class="navigation prev">zurück</button>
 
                     <!-- FRAGE 1 -->
                     <section>
-                         <button class="navigation page" onclick="q1.click()">X</button>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
-                            <input id="q1" class="durable quest page-visibility" type="radio" name="visible" value="4" hidden>
-                            <h3>question1</h3>
+                            <input id="q1" class="durable quest page-visibility" type="radio" name="visible" hidden>
+                            <fieldset>
+                                <legend>
+                                    <h3>Aufgabe</h3>
+                                </legend>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod in distinctio
+                                    explicabo excepturi itaque libero! Eius, vero deserunt quibusdam culpa aperiam quia
+                                    beatae earum saepe voluptas. Quos ducimus neque minima.</p>
+
+                                <div class="align vertical">
+                                    <label>
+                                        <input class="answer" type="radio" name="a1">radioradio radioradio
+                                    </label>
+                                    <label>
+                                        <input class="answer" type="radio" name="a1">radio
+                                    </label>
+                                    <label>
+                                        <input class="answer" type="radio" name="a1">radio
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
+                        <button class="navigation page" onclick="q1.click()">X</button>
                     </section>
 
                     <!-- FRAGE 2 -->
                     <section>
-                         <button class="navigation page" onclick="q1.click()">X</button>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
-                            <input id="q2" class="durable quest page-visibility" type="radio" name="visible" value="5" hidden>
-                            <h3>question2</h3>
+                            <input id="q2" class="durable quest page-visibility" type="radio" name="visible" hidden>
+                            <fieldset>
+                                <legend>
+                                    <h3>Aufgabe</h3>
+                                </legend>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod in distinctio
+                                    explicabo excepturi itaque libero! Eius, vero deserunt quibusdam culpa aperiam quia
+                                    beatae earum saepe voluptas. Quos ducimus neque minima.</p>
+
+                                <div class="align vertical">
+                                    <label>
+                                        <input class="answer" type="checkbox" name="a2">checkboxcheckbox
+                                    </label>
+                                    <label>
+                                        <input class="answer" type="checkbox" name="a2">checkbox
+                                    </label>
+                                    <label>
+                                        <input class="answer" type="checkbox" name="a2">checkbox
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
+                        <button class="navigation page" onclick="q2.click()">X</button>
                     </section>
                     <button onclick="navigateNext()" class="navigation next">vor</button>
                 </div>
@@ -82,33 +124,36 @@
             </article>
             <article>
 
-                <div class="reset-questions page-listview page-visibility-checked reset-answered">
+                <div class="reset-questions page-listview page-visibility-checked reset-answerd">
                     <button class="navigation overview" onclick="overview.click()">Übersicht</button>
                     <button onclick="navigatePrev()" class="navigation prev">zurück</button>
                     <section>
-                         <button class="navigation page" onclick="q1.click()">X</button>
+                        <button class="navigation page" onclick="q1.click()">X</button>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
-                            <input id="q3" class="durable quest page-visibility" type="radio" name="visible" value="3" hidden>
-                            <input id="c3a" class="durable answere" type="checkbox">
+                            <input id="q3" class="durable quest page-visibility" type="radio" name="visible" value="3"
+                                hidden>
+                            <input id="c3a" class="durable answer validation" type="checkbox">
                             <h3>question3</h3>
                         </div>
                     </section>
                     <section>
-                         <button class="navigation page" onclick="q1.click()">X</button>
+                        <button class="navigation page" onclick="q1.click()">X</button>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
-                            <input id="q4" class="durable quest page-visibility" type="radio" name="visible" value="4" hidden>
-                            <input id="c4a" class="durable answere" type="checkbox">
+                            <input id="q4" class="durable quest page-visibility" type="radio" name="visible" value="4"
+                                hidden>
+                            <input id="c4a" class="durable answer" type="checkbox">
                             <h3>question4</h3>
                         </div>
                     </section>
                     <section>
-                         <button class="navigation page" onclick="q1.click()">X</button>
+                        <button class="navigation page" onclick="q1.click()">X</button>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
-                            <input id="q5" class="durable quest page-visibility" type="radio" name="visible" value="5" hidden>
-                            <input id="c5a" class="durable dropable" placeholder="nix" type="text">
+                            <input id="q5" class="durable quest page-visibility" type="radio" name="visible" value="5"
+                                hidden>
+                            <input id="c5a" class="durable dropable validate half-points" placeholder="" type="text">
                             <h3>question5</h3>
                         </div>
                     </section>
@@ -123,27 +168,30 @@
         </div>
 
         <menu>
-            <li><time>:</time></li>
+            <li><output class="time">:</output></li>
             <li>
                 <button class="pause" onclick="dlgpause.showModal()">Pause</button>
             </li>
             <li>
                 <button class="finish" onclick="dlgfinish.showModal()">Fertig</button>
+                <button class="finished" onclick="dlgfinish.showModal()">Ergebnisse</button>
             </li>
         </menu>
 
-        <dialog id="dlgpause">pause <time>:</time></dialog>
+        <dialog id="dlgpause">pause <output class="time">:</output></dialog>
         <dialog id="dlgfinish">
             <div class="page-visibility-checked">
-                <input id="prefinish" type="radio" class="durable page-visibility" name="finishing" value="1" hidden checked>
-                Wirklich? <time>:</time>
+                <input id="prefinish" type="radio" class="durable page-visibility" name="finishing" value="1" hidden
+                    checked>
+                Wirklich? <output class="time">:</output>
                 <div>
                     <button onclick="dlgfinish.close()">Zurück</button>
                     <button onclick="finished.click()">Ergebnisse</button>
                 </div>
             </div>
             <div class="page-visibility-checked">
-                <input id="finished" type="radio" class="finished durable page-visibility" name="finishing" value="2" hidden>
+                <input id="finished" type="radio" class="finished durable page-visibility" name="finishing" value="2"
+                    hidden>
                 Ergebnisse
             </div>
         </dialog>

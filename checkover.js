@@ -34,6 +34,14 @@ onload = (event) => {
     }
 };
 
+const test = () => {
+   // var bodyStyles = window.getComputedStyle(document.body);
+    var bodyStyles = window.getComputedStyle(document.getElementById('bla'));
+    var fooBar = bodyStyles.getPropertyValue('--validation-points');
+
+    alert(fooBar)
+}
+
 data.oninput = (event) => {
     switch (event.target.type) {
         case "radio":
@@ -117,7 +125,7 @@ document.addEventListener("keydown", (event) => {
                 });
 
                 data.reset();
-                
+
                 break;
             default:
             /* console.log(event); */
