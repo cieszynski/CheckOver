@@ -35,7 +35,7 @@ onload = (event) => {
 };
 
 const test = () => {
-   // var bodyStyles = window.getComputedStyle(document.body);
+    // var bodyStyles = window.getComputedStyle(document.body);
     var bodyStyles = window.getComputedStyle(document.getElementById('bla'));
     var fooBar = bodyStyles.getPropertyValue('--validation-points');
 
@@ -65,6 +65,21 @@ data.oninput = (event) => {
                 event.target.id,
                 event.target.value,
             );
+    }
+
+    if (event.target.id === 'finished') {
+        document.querySelectorAll('.answer').forEach(item => {
+            item.disabled = true;
+
+            if (item.dataset.incr) switch (item.type) {
+                case 'radio':
+                case 'checkbox':
+                    if(item.checked) {
+                        points.value = (parseFloat(points.value) + parseFloat(item.dataset.incr)).toFixed(1);
+                    }
+                    break;
+            }
+        });
     }
 };
 

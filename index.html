@@ -73,13 +73,13 @@
 
                                 <div class="align vertical">
                                     <label>
-                                        <input class="answer" type="radio" name="a1">radioradio radioradio
+                                        <input id="a1a" class="answer durable" type="radio" name="a1">radioradio radioradio
                                     </label>
                                     <label>
-                                        <input class="answer" type="radio" name="a1">radio
+                                        <input id="a1b" class="answer durable" type="radio" name="a1">radio
                                     </label>
                                     <label>
-                                        <input class="answer" type="radio" name="a1">radio
+                                        <input id="a1c" class="answer durable" type="radio" name="a1" data-incr="1">radio
                                     </label>
                                 </div>
                             </fieldset>
@@ -102,13 +102,13 @@
 
                                 <div class="align vertical">
                                     <label>
-                                        <input class="answer" type="checkbox" name="a2">checkboxcheckbox
+                                        <input id="a2a" class="answer durable" type="checkbox" name="a2">checkboxcheckbox
                                     </label>
                                     <label>
-                                        <input class="answer" type="checkbox" name="a2">checkbox
+                                        <input id="a2b" class="answer durable" type="checkbox" name="a2" data-incr="1">checkbox
                                     </label>
                                     <label>
-                                        <input class="answer" type="checkbox" name="a2">checkbox
+                                        <input id="a2c" class="answer durable" type="checkbox" name="a2" data-incr="1">checkbox
                                     </label>
                                 </div>
                             </fieldset>
@@ -193,6 +193,7 @@
                 <input id="finished" type="radio" class="finished durable page-visibility" name="finishing" value="2"
                     hidden>
                 Ergebnisse
+                <output id="points">0</output>
             </div>
         </dialog>
     </form>
