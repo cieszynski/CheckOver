@@ -72,14 +72,16 @@
                                     beatae earum saepe voluptas. Quos ducimus neque minima.</p>
 
                                 <div class="align vertical">
-                                    <label>
-                                        <input id="a1a" class="answer durable" type="radio" name="a1">radioradio radioradio
+                                    <label class="answer">
+                                        <input id="a1a" class="answer durable" type="radio" name="a1">radioradio
+                                        radioradio
                                     </label>
-                                    <label>
+                                    <label class="answer">
                                         <input id="a1b" class="answer durable" type="radio" name="a1">radio
                                     </label>
-                                    <label>
-                                        <input id="a1c" class="answer durable" type="radio" name="a1" data-incr="1">radio
+                                    <label class="answer">
+                                        <input id="a1c" class="answer durable" type="radio" name="a1"
+                                            data-incr="1">radio
                                     </label>
                                 </div>
                             </fieldset>
@@ -101,14 +103,17 @@
                                     beatae earum saepe voluptas. Quos ducimus neque minima.</p>
 
                                 <div class="align vertical">
-                                    <label>
-                                        <input id="a2a" class="answer durable" type="checkbox" name="a2">checkboxcheckbox
+                                    <label class="answer">
+                                        <input id="a2a" class="answer durable" type="checkbox"
+                                            name="a2">checkboxcheckbox
                                     </label>
-                                    <label>
-                                        <input id="a2b" class="answer durable" type="checkbox" name="a2" data-incr="1">checkbox
+                                    <label class="answer">
+                                        <input id="a2b" class="answer durable" type="checkbox" name="a2"
+                                            data-incr="1">checkbox
                                     </label>
-                                    <label>
-                                        <input id="a2c" class="answer durable" type="checkbox" name="a2" data-incr="1">checkbox
+                                    <label class="answer">
+                                        <input id="a2c" class="answer durable" type="checkbox" name="a2"
+                                            data-incr="1">checkbox
                                     </label>
                                 </div>
                             </fieldset>
@@ -127,8 +132,9 @@
                 <div class="reset-questions page-listview page-visibility-checked reset-answerd">
                     <button class="navigation overview" onclick="overview.click()">Übersicht</button>
                     <button onclick="navigatePrev()" class="navigation prev">zurück</button>
+
+                    <!-- FRAGE 3 -->
                     <section>
-                        <button class="navigation page" onclick="q1.click()">X</button>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
                             <input id="q3" class="durable quest page-visibility" type="radio" name="visible" value="3"
@@ -136,9 +142,11 @@
                             <input id="c3a" class="durable answer validation" type="checkbox">
                             <h3>question3</h3>
                         </div>
-                    </section>
-                    <section>
                         <button class="navigation page" onclick="q1.click()">X</button>
+                    </section>
+
+                    <!-- FRAGE 4 -->
+                    <section>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
                             <input id="q4" class="durable quest page-visibility" type="radio" name="visible" value="4"
@@ -146,16 +154,43 @@
                             <input id="c4a" class="durable answer" type="checkbox">
                             <h3>question4</h3>
                         </div>
-                    </section>
-                    <section>
                         <button class="navigation page" onclick="q1.click()">X</button>
+                    </section>
+
+                    <!-- FRAGE 5 -->
+                    <section>
 
                         <div class="increment-questions page-listitem page-visibility-checked">
                             <input id="q5" class="durable quest page-visibility" type="radio" name="visible" value="5"
                                 hidden>
-                            <input id="c5a" class="durable dropable validate half-points" placeholder="" type="text">
-                            <h3>question5</h3>
+                            <fieldset>
+                                <legend>
+                                    <h3>Aufgabe</h3>
+                                </legend>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod in distinctio
+                                    explicabo excepturi itaque libero! Eius, vero deserunt quibusdam culpa aperiam quia
+                                    beatae earum saepe voluptas. Quos ducimus neque minima.</p>
+                                <div class="align horizontal">
+                                    <label class="drop">
+                                        <input id="a5a" class="durable" draggable="true" value="aaa" placeholder="">
+                                    </label>
+                                    <label class="drop">
+                                        <input id="a5b" class="durable dropable" draggable="true" value="" patter="aaa"
+                                            placeholder="">
+                                    </label>
+                                </div>
+                                <div class="align horizontal">
+                                    <label class="drop">
+                                        <input id="a5c" class="durable" draggable="true" value="bbb" placeholder="">
+                                    </label>
+                                    <label class="drop">
+                                        <input id="a5d" class="durable dropable" draggable="true" value="" patter=""
+                                            placeholder="">
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
+                        <button class="navigation page" onclick="q1.click()">X</button>
                     </section>
                     <button onclick="navigateNext()" class="navigation next">vor</button>
                 </div>

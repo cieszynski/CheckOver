@@ -11,8 +11,8 @@ onload = (event) => {
                                 "true",
                             );
                         } else {
-                            // ensure that hardcoded 'checked'
-                            // get not removed
+                            // ensure that hard-coded 'checked'
+                            // are not removed
                             if (!elem.hasAttribute('checked')) {
                                 elem.removeAttribute(
                                     "checked",
@@ -22,7 +22,10 @@ onload = (event) => {
                         break;
 
                     default:
-                        elem.value = localStorage.getItem(elem.id);
+                        // ensure that hard-coded 'values' are not removed
+                        if ((value = localStorage.getItem(elem.id)) !== null) {
+                            elem.value = value;
+                        }
                 }
             });
 
@@ -32,6 +35,73 @@ onload = (event) => {
             );
         });
     }
+
+    document.querySelectorAll("[draggable]")
+        .forEach((elem) => {
+            elem.onkeydown = (event) => {
+                switch (event.key) {
+                    case 'Tab':
+                        break;
+                    default:
+                        event.preventDefault();
+                }
+            }
+
+            // Chrome/Edge only: prevent selection
+            elem.onselect = (event) => {
+                event.target.selectionStart = event.target.selectionEnd;
+            }
+
+            elem.ondragstart = (event) => {
+                event.dataTransfer.dropEffect = "move";
+                event.dataTransfer.effectAllowed = "move";
+                event.dataTransfer.setData("text/id", event.target.id);
+            };
+
+            elem.ondragover = (event) => {
+                event.preventDefault(); /* important */
+                event.dataTransfer.dropEffect = "move";
+            };
+
+            elem.ondragenter = (event) => {
+                /* if (!event.target.value) { */
+                    event.target.style.backgroundColor = 'red'
+                /* } */
+            }
+
+            elem.ondragleave = (event) => {
+                event.target.style.backgroundColor = 'white'
+            }
+
+            elem.ondrop = (event) => {
+                event.preventDefault(); /* important */
+
+                const id = event.dataTransfer.getData("text/id");
+                event.target.style.backgroundColor = 'white'
+
+                if (id) {
+                    const elem = document.getElementById(id);
+                    const tmp = event.target.value;
+                    event.target.value = elem.value;
+                    elem.value = tmp;
+                    event.target.dispatchEvent(
+                        new Event('input', {
+                            bubbles: true,
+                            cancelable: false
+                        }));
+                } else {
+                    console.error('no id defined')
+                }
+            };
+
+            elem.ondragend = (event) => {
+                event.target.dispatchEvent(
+                    new Event('input', {
+                        bubbles: true,
+                        cancelable: false
+                    }));
+            }
+        });
 };
 
 const test = () => {
@@ -68,13 +138,13 @@ data.oninput = (event) => {
     }
 
     if (event.target.id === 'finished') {
-        document.querySelectorAll('.answer').forEach(item => {
+        document.querySelectorAll('input.answer').forEach(item => {
             item.disabled = true;
 
             if (item.dataset.incr) switch (item.type) {
                 case 'radio':
                 case 'checkbox':
-                    if(item.checked) {
+                    if (item.checked) {
                         points.value = (parseFloat(points.value) + parseFloat(item.dataset.incr)).toFixed(1);
                     }
                     break;
@@ -126,6 +196,11 @@ const navigatePrev = () => {
         });
     }
 }
+
+document.addEventListener('contextmenu', (event) => {
+    /* FF: SHIF + right-click further possible! */
+    event.preventDefault();
+});
 
 document.addEventListener("keydown", (event) => {
     if (event.ctrlKey && event.shiftKey) {

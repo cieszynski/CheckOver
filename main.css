@@ -107,7 +107,7 @@ article {
         height: 120px;
 
         & > span::before {
-            content: counter(answerd);
+            content: counter(answered);
         }
 
         & > span::after {
@@ -245,8 +245,8 @@ div.increment-questions {
     counter-increment: questions question;
 }
 
-div.reset-answerd {
-    counter-reset: answerd;
+div.reset-answered {
+    counter-reset: answered;
 }
 
 fieldset {
@@ -284,7 +284,7 @@ input {
     }
 }
 
-label {
+label.answer {
     display: flex;
     align-items: center;
     min-height: 48px;
@@ -339,6 +339,25 @@ label {
     }
 }
 
+label.drop {
+    margin: 0 0.25em;
+    border-radius: 8px;
+    border: 3px solid gray;
+    background-color: #fff;
+
+    & > input {
+        cursor: grab;
+        text-align: center;
+        caret-color: transparent;
+        background: none;
+        border: none;
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
+}
+
 menu {
     padding: 8px;
     list-style: none;
@@ -375,7 +394,7 @@ menu {
 section {
     /* count edited pages in chapter/article */
     &:has(.answer:checked, .dropable:not(:placeholder-shown)) {
-        counter-increment: answerd;
+        counter-increment: answered;
     }
 }
 
