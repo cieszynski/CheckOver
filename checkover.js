@@ -38,25 +38,22 @@ onload = (event) => {
 
     document.querySelectorAll("[draggable]")
         .forEach((elem) => {
-            elem.onkeydown = (event) => {
-                switch (event.key) {
-                    case 'Tab':
-                        break;
-                    default:
-                        event.preventDefault();
-                }
-            }
 
-            // Chrome/Edge only: prevent selection
+            // Chrome/Edge only: prevent selection?
             elem.onselect = (event) => {
+                event.preventDefault();
                 event.target.selectionStart = event.target.selectionEnd;
             }
 
-            elem.ondragstart = (event) => {
-                event.dataTransfer.dropEffect = "move";
-                event.dataTransfer.effectAllowed = "move";
-                event.dataTransfer.setData("text/id", event.target.id);
+            const handleDrag = (event) => {
+                if (event.target.draggable) { // only way to prevent dnd after finishing!
+                    event.dataTransfer.dropEffect = "move";
+                    event.dataTransfer.effectAllowed = "move";
+                    event.dataTransfer.setData("text/id", event.target.id);
+                }
             };
+
+            elem.ondragstart = handleDrag;
 
             elem.ondragover = (event) => {
                 event.preventDefault(); /* important */
@@ -65,7 +62,7 @@ onload = (event) => {
 
             elem.ondragenter = (event) => {
                 /* if (!event.target.value) { */
-                    event.target.style.backgroundColor = 'red'
+                event.target.style.backgroundColor = 'red'
                 /* } */
             }
 
@@ -73,26 +70,30 @@ onload = (event) => {
                 event.target.style.backgroundColor = 'white'
             }
 
-            elem.ondrop = (event) => {
+            const handleDrop = (event) => {
                 event.preventDefault(); /* important */
 
-                const id = event.dataTransfer.getData("text/id");
-                event.target.style.backgroundColor = 'white'
+                if (event.target.draggable) { // only way to prevent dnd after finishing!
+                    const id = event.dataTransfer.getData("text/id");
+                    event.target.style.backgroundColor = 'white'
 
-                if (id) {
-                    const elem = document.getElementById(id);
-                    const tmp = event.target.value;
-                    event.target.value = elem.value;
-                    elem.value = tmp;
-                    event.target.dispatchEvent(
-                        new Event('input', {
-                            bubbles: true,
-                            cancelable: false
-                        }));
-                } else {
-                    console.error('no id defined')
+                    if (id) {
+                        const elem = document.getElementById(id);
+                        const tmp = event.target.value;
+                        event.target.value = elem.value;
+                        event.target.dispatchEvent(
+                            new Event('input', {
+                                bubbles: true,
+                                cancelable: false
+                            }));
+                        elem.value = tmp;
+                    } else {
+                        console.error('no id defined')
+                    }
                 }
             };
+
+            elem.ondrop = handleDrop;
 
             elem.ondragend = (event) => {
                 event.target.dispatchEvent(
@@ -101,13 +102,59 @@ onload = (event) => {
                         cancelable: false
                     }));
             }
+
+            elem.onkeydown = (event) => {
+                //console.log(event.key)
+                switch (event.key) {
+                    case 'Tab':
+                        break;
+                    case 'Escape':
+                        globalThis.dt = null;
+                        document.querySelector('.datatransfer')
+                            ?.classList
+                            ?.remove('datatransfer');
+                        break;
+                    case 'Enter':
+                    case ' ':
+                        event.preventDefault();
+                        if (globalThis.dt) {
+                            event.dataTransfer = globalThis.dt;
+                            globalThis.dt = null;
+                            document.querySelector('.datatransfer')
+                                ?.classList
+                                ?.remove('datatransfer');
+                            handleDrop(event);
+                        } else {
+                            globalThis.dt = event.dataTransfer = new DataTransfer();
+                            event.target.classList.add('datatransfer')
+                            handleDrag(event);
+                        }
+                    default:
+                        event.preventDefault();
+                }
+            }
         });
 };
 
+/* 
+@property --timer-seconds {
+    initial-value: 0;
+    inherits: true;
+    syntax: "<integer>";
+}
+     */
+window.CSS.registerProperty({
+    name: "--timer-seconds",
+    syntax: "<integer>",
+    inherits: true,
+    initialValue: 0,
+});
+
+
 const test = () => {
     // var bodyStyles = window.getComputedStyle(document.body);
-    var bodyStyles = window.getComputedStyle(document.getElementById('bla'));
-    var fooBar = bodyStyles.getPropertyValue('--validation-points');
+    var bodyStyles = window.getComputedStyle(bla, '::after');
+    var fooBar = bodyStyles.getPropertyValue('content');
 
     alert(fooBar)
 }
@@ -140,6 +187,8 @@ data.oninput = (event) => {
     if (event.target.id === 'finished') {
         document.querySelectorAll('input.answer').forEach(item => {
             item.disabled = true;
+            item.readonly = true;
+            item.draggable = false; // important to prevent dnd after finishing
 
             if (item.dataset.incr) switch (item.type) {
                 case 'radio':
@@ -148,6 +197,10 @@ data.oninput = (event) => {
                         points.value = (parseFloat(points.value) + parseFloat(item.dataset.incr)).toFixed(1);
                     }
                     break;
+                default:
+                    if (item.pattern && (item.value === item.pattern)) {
+                        points.value = (parseFloat(points.value) + parseFloat(item.dataset.incr)).toFixed(1);
+                    }
             }
         });
     }

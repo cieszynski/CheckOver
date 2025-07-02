@@ -54,7 +54,7 @@
             <input id="overview" class="durable quest page-visibility" type="radio" name="visible" value="3" hidden>
             <article>
 
-                <div class="reset-questions page-listview page-visibility-checked reset-answerd">
+                <div class="reset-questions page-listview page-visibility-checked">
                     <button class="navigation overview" onclick="overview.click()">Übersicht</button>
                     <button onclick="navigatePrev()" class="navigation prev">zurück</button>
 
@@ -124,7 +124,7 @@
                 </div>
                 <header>
                     <h2>article1</h2> <label for="q1">Öffnen</label>
-                    <span> von </span>
+                    <span id="bla"> von </span>
                 </header>
             </article>
             <article>
@@ -175,8 +175,8 @@
                                         <input id="a5a" class="durable" draggable="true" value="aaa" placeholder="">
                                     </label>
                                     <label class="drop">
-                                        <input id="a5b" class="durable dropable" draggable="true" value="" patter="aaa"
-                                            placeholder="">
+                                        <input id="a5b" class="durable dropable answer" draggable="true" value="" pattern="aaa"
+                                            placeholder="" data-incr="1">
                                     </label>
                                 </div>
                                 <div class="align horizontal">
@@ -184,8 +184,8 @@
                                         <input id="a5c" class="durable" draggable="true" value="bbb" placeholder="">
                                     </label>
                                     <label class="drop">
-                                        <input id="a5d" class="durable dropable" draggable="true" value="" patter=""
-                                            placeholder="">
+                                        <input id="a5d" class="durable dropable answer" draggable="true" value="" pattern="bbb"
+                                            placeholder="" data-incr="1">
                                     </label>
                                 </div>
                             </fieldset>
@@ -222,6 +222,7 @@
                 <div>
                     <button onclick="dlgfinish.close()">Zurück</button>
                     <button onclick="finished.click()">Ergebnisse</button>
+                    <button onclick="test()">TEST</button>
                 </div>
             </div>
             <div class="page-visibility-checked">

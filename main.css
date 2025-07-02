@@ -99,7 +99,7 @@ body {
 }
 
 article {
-    counter-reset: questions;
+    counter-reset: questions answered;
 
     & > header {
         border: 1px solid gray;
@@ -236,7 +236,7 @@ div.page-listitem {
 }
 
 div.reset-questions {
-    counter-reset: questions;
+    /* counter-reset: questions; */
 }
 
 div.increment-questions {
@@ -246,7 +246,7 @@ div.increment-questions {
 }
 
 div.reset-answered {
-    counter-reset: answered;
+    /* counter-reset: answered; */
 }
 
 fieldset {
@@ -281,6 +281,10 @@ input {
 
     &.page-visibility {
         display: none;
+    }
+
+    &.datatransfer {
+        outline: 5px solid pink;
     }
 }
 
